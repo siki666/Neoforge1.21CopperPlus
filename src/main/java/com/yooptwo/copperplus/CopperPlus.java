@@ -38,7 +38,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(CopperPlus.MODID)
 public class CopperPlus {
-    // Define mod id in a common place for everything to reference
+    //Mod ID是“yoopscopperplus”。在META-INF/neoforge.mods.toml文件中，它被定义为“modid”。材质yaml文件中也使用了这个值。
     public static final String MODID = "yoopscopperplus";
     // Directly reference a slf4j logger
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -54,10 +54,10 @@ public class CopperPlus {
 
         ModItems.register(modEventBus);//将ModItems注册到modEventBus
 
-        // Register the item to a creative tab
+        //将ModItems加入到创造模式标签中
         modEventBus.addListener(this::addCreative);
 
-        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        //注册配置文件，使得配置文件能够被加载与修改（游戏内）
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
@@ -65,8 +65,8 @@ public class CopperPlus {
 
     }
 
-    // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
+        //将古代铜锭加入到原材料标签页中
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(ModItems.ANCIENT_COPPER_INGOT);
         }
