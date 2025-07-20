@@ -1,6 +1,7 @@
 package com.yooptwo.copperplus.item;
 
 import com.yooptwo.copperplus.CopperPlus;
+import com.yooptwo.copperplus.item.custom.ChiselItem;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -12,6 +13,9 @@ public class ModItems {
 
     public static final DeferredItem<Item> ANCIENT_COPPER_INGOT = ITEMS.register("ancient_copper_ingot",
             () -> new Item(new Item.Properties()));
+
+    public static final DeferredItem<Item> COPPER_CHISEL = ITEMS.register("copper_chisel",
+            () -> new ChiselItem(new Item.Properties().durability(350)));
 
     //定义一个用于注册物品的方法，参数使用IEventBus
     public static void register(IEventBus eventBus) {

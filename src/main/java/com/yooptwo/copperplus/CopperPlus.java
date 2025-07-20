@@ -76,6 +76,9 @@ public class CopperPlus {
         if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
             event.accept(ModBlocks.ANCIENT_COPPER_BLOCK);
         }
+        if(event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES){
+            event.accept(ModItems.COPPER_CHISEL);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
