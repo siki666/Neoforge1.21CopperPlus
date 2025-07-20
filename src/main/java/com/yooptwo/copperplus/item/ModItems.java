@@ -15,7 +15,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final DeferredItem<Item> COPPER_CHISEL = ITEMS.register("copper_chisel",
-            () -> new ChiselItem(new Item.Properties().durability(350)));
+            () -> new ChiselItem(new Item.Properties().durability(350).stacksTo(1)));
 
     //定义一个用于注册物品的方法，参数使用IEventBus
     public static void register(IEventBus eventBus) {

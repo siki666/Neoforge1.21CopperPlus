@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [{"item": "yoopscopperplus:ancient_copper_block"}],
+  "result": {
+    "count": 9,
+    "id": "yoopscopperplus:ancient_copper_ingot"
+  }
+}
