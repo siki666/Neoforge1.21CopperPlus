@@ -1,5 +1,6 @@
 package com.yooptwo.copperplus;
 
+import com.yooptwo.copperplus.block.ModBlocks;
 import com.yooptwo.copperplus.item.ModItems;
 import org.slf4j.Logger;
 
@@ -53,8 +54,11 @@ public class CopperPlus {
         NeoForge.EVENT_BUS.register(this);
 
         ModItems.register(modEventBus);//将ModItems注册到modEventBus
+        ModBlocks.register(modEventBus);//将ModBlocks注册到modEventBus
 
-        //将ModItems加入到创造模式标签中
+
+
+        //将modEventBus加入到创造模式标签中
         modEventBus.addListener(this::addCreative);
 
         //注册配置文件，使得配置文件能够被加载与修改（游戏内）
@@ -66,9 +70,11 @@ public class CopperPlus {
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        //将古代铜锭加入到原材料标签页中
         if(event.getTabKey() == CreativeModeTabs.INGREDIENTS){
             event.accept(ModItems.ANCIENT_COPPER_INGOT);
+        }
+        if(event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS){
+            event.accept(ModBlocks.ANCIENT_COPPER_BLOCK);
         }
     }
 

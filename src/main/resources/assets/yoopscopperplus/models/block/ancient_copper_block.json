@@ -1,0 +1,6 @@
+{
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "yoopscopperplus:block/ancient_copper_block"
+  }
+}
