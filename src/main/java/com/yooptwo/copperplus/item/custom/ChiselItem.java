@@ -1,11 +1,13 @@
 package com.yooptwo.copperplus.item.custom;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -65,8 +67,24 @@ public class ChiselItem extends Item {
             Map.entry(Blocks.GRAVEL, Items.FLINT)
     );
 
-
-
+    Map<Block, Integer> CHISEL_EXPERIENCE = Map.ofEntries(
+            //ores' experience drop
+            Map.entry(Blocks.ANCIENT_DEBRIS, 4),
+            Map.entry(Blocks.DIAMOND_ORE, 3),
+            Map.entry(Blocks.EMERALD_ORE, 2),
+            Map.entry(Blocks.GOLD_ORE, 2),
+            Map.entry(Blocks.IRON_ORE, 2),
+            Map.entry(Blocks.COAL_ORE, 1),
+            Map.entry(Blocks.OAK_WOOD, 1),
+            Map.entry(Blocks.DIRT, 1),
+            Map.entry(Blocks.GRAVEL, 1),
+            //ore blocks' experience drop
+            Map.entry(Blocks.NETHERITE_BLOCK, 8),
+            Map.entry(Blocks.DIAMOND_BLOCK, 6),
+            Map.entry(Blocks.EMERALD_BLOCK, 4),
+            Map.entry(Blocks.GOLD_BLOCK, 4),
+            Map.entry(Blocks.IRON_BLOCK, 4)
+    );
     public ChiselItem(Properties properties) {
         super(properties);
     }
@@ -78,15 +96,18 @@ public class ChiselItem extends Item {
                 ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, dropItem);
                 level.addFreshEntity(itemEntity);
             }
-
-
         }
-
     }
 
-
-
-
+    private  void doExtraExperience(Level level,Block clickedBlock, BlockPos pos){
+        if(!level.isClientSide()){
+            if(CHISEL_EXPERIENCE.containsKey(clickedBlock)){
+                int amount = CHISEL_EXPERIENCE.get(clickedBlock);
+                ExperienceOrb orb = new ExperienceOrb(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, amount);
+                level.addFreshEntity(orb);
+            }
+        }
+    }
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
@@ -96,15 +117,13 @@ public class ChiselItem extends Item {
         if (CHISEL_MAP_ALL.containsKey(clickedBlock)) {
             if(!level.isClientSide()){
                 level.setBlockAndUpdate(context.getClickedPos(), CHISEL_MAP_ALL.get(clickedBlock).defaultBlockState());
-                if(CHISEL_DROP.containsKey(clickedBlock)){
-                    doExtraDrop(level,clickedBlock,context.getClickedPos());
-                }
+                doExtraDrop(level,clickedBlock,context.getClickedPos());
+                doExtraExperience(level,clickedBlock,context.getClickedPos());
                 context.getItemInHand().hurtAndBreak(1,((ServerLevel)level),
-                        context.getPlayer(),item ->context.getPlayer().onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
+                context.getPlayer(),item ->context.getPlayer().onEquippedItemBroken(item, EquipmentSlot.MAINHAND));
                 level.playSound(null, context.getClickedPos(), SoundEvents.GRINDSTONE_USE, SoundSource.BLOCKS);
             }
         }
-
         return InteractionResult.SUCCESS;
     }
 }
